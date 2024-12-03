@@ -2,16 +2,17 @@ import React from "react";
 //mui
 import { Stack, Tooltip, Typography, IconButton } from "@mui/material";
 import { ContentCopy } from "@mui/icons-material";
-//component
-import BoxComponent from "./box";
 //toast
 import { toast } from "react-hot-toast";
+//type
+import { radioType } from "../type/radio-type";
 
 interface PropsType {
   result: string;
+  textType: radioType;
 }
 
-const Result: React.FC<PropsType> = ({ result }) => {
+const Result: React.FC<PropsType> = ({ result, textType }) => {
   const handleCopy = async () => {
     await navigator.clipboard.writeText(result);
     toast.dismiss(result);
@@ -20,27 +21,45 @@ const Result: React.FC<PropsType> = ({ result }) => {
     });
   };
 
+  const handleTextType = (text: radioType): string => {
+    switch (text) {
+      case "small":
+        return "lowercase";
+      case "capital":
+        return "uppercase";
+      case "all":
+        return "none";
+      default:
+        return "none";
+    }
+  };
+
   return (
-    <BoxComponent>
-      <Stack
+    <Stack
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: 2,
+      }}
+    >
+      <Typography
+        variant="h6"
         sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 2,
+          minWidth: "86%",
+          overflowX: "auto",
+          textTransform: handleTextType(textType),
         }}
       >
-        <Typography variant="h6" sx={{ minWidth: "86.1%", overflowX: "auto" }}>
-          PTx1f5DaFX
-        </Typography>
-        <Tooltip title="Copy" placement="top" sx={{ width: "8.9%" }}>
-          <IconButton onClick={() => handleCopy()}>
-            <ContentCopy />
-          </IconButton>
-        </Tooltip>
-      </Stack>
-    </BoxComponent>
+        {result}
+      </Typography>
+      <Tooltip title="Copy" placement="top" sx={{ width: "40px" }}>
+        <IconButton onClick={() => handleCopy()}>
+          <ContentCopy />
+        </IconButton>
+      </Tooltip>
+    </Stack>
   );
 };
 

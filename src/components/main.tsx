@@ -1,12 +1,59 @@
 import React from "react";
+//mui
 import { Stack, Box, Button } from "@mui/material";
+//components
 import BoxComponent from "./box";
 import Result from "./result";
-import RadioForm from "./radio-form";
+import PasswordForm from "./form/password-form";
+//type
+import { radioType } from "../type/radio-type";
+//service
+import { PasswordService } from "../service/password";
 
 const Main: React.FC = () => {
-  const [result, setResult] = React.useState<string>("PTx1f5DaFX");
-  const [formResult, setFormResult] = React.useState<{} | null>();
+  const [result, setResult] = React.useState<string>("");
+  const [sliderValue, setSliderValue] = React.useState<number>(25);
+  const [radioValue, setRadioValue] = React.useState<radioType>("small");
+  const [excludeNumbers, setExcludeNumbers] = React.useState<boolean>(false);
+  const [excludeSpecialChars, setExcludeSpecialChars] =
+    React.useState<boolean>(false);
+
+  const handleChangeSlider = (
+    //@ts-ignore
+    event: Event,
+    newValue: number | number[]
+  ): void => {
+    setSliderValue(newValue as number);
+  };
+
+  const handleChangeRadio = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    setRadioValue(event.target.value as radioType);
+  };
+
+  const handleChangeCheckbox = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const { name, checked } = event.target;
+    if (name === "excludeNumbers") {
+      setExcludeNumbers(checked); // Toggle excludeNumbers
+    } else if (name === "excludeSpecialChars") {
+      setExcludeSpecialChars(checked); // Toggle excludeSpecialChars
+    }
+  };
+
+  const handleGenerate = async () => {
+    console.log(sliderValue, radioValue, excludeNumbers, excludeSpecialChars);
+    try {
+      const { random_password } = await PasswordService.generatePassword(
+        sliderValue,
+        excludeNumbers,
+        excludeSpecialChars
+      );
+      setResult(random_password);
+    } catch (error) {}
+  };
 
   return (
     <Stack
@@ -40,15 +87,24 @@ const Main: React.FC = () => {
             },
           }}
         >
-          <Result result={result} />
           <BoxComponent>
-            <Stack>
-              <RadioForm />
-              <Box></Box>
-            </Stack>
+            <Result result={result} textType={radioValue} />
           </BoxComponent>
           <BoxComponent>
-            <Button variant="outlined" sx={{ width: "100%" }}>
+            <PasswordForm
+              excludeNumbers={excludeNumbers}
+              excludeSpecialChars={excludeSpecialChars}
+              handleChangeCheckbox={handleChangeCheckbox}
+              handleChangeRadio={handleChangeRadio}
+              handleChangeSlider={handleChangeSlider}
+            />
+          </BoxComponent>
+          <BoxComponent>
+            <Button
+              variant="outlined"
+              sx={{ width: "100%" }}
+              onClick={handleGenerate}
+            >
               Click
             </Button>
           </BoxComponent>
