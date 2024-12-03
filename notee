@@ -1,0 +1,123 @@
+//copy button
+//select button
+
+//import React, { useState, ChangeEvent } from 'react';
+//import { Box, FormControl, FormLabel, Slider, RadioGroup, FormControlLabel, Radio, Checkbox, FormGroup, Button, Alert } from '@mui/material';
+
+//// Types for the password settings
+//type PasswordType = 'capital' | 'small' | 'all';
+
+//const PasswordSettingsForm: React.FC = () => {
+//  // States for each component
+//  const [sliderValue, setSliderValue] = useState<number>(25); // Slider for password length
+//  const [passwordType, setPasswordType] = useState<PasswordType>('small'); // Radio buttons for password type
+//  const [excludeNumbers, setExcludeNumbers] = useState<boolean>(false); // Checkbox for excluding numbers
+//  const [excludeSpecialChars, setExcludeSpecialChars] = useState<boolean>(false); // Checkbox for excluding special chars
+//  const [errorMessage, setErrorMessage] = useState<string>(''); // Error message state
+
+//  // Handlers for the form elements
+//  const handleSliderChange = (event: Event, newValue: number | number[]): void => {
+//    setSliderValue(newValue as number); // Update slider value
+//  };
+
+//  const handlePasswordTypeChange = (event: ChangeEvent<HTMLInputElement>): void => {
+//    setPasswordType(event.target.value as PasswordType); // Update password type (radio button)
+//  };
+
+//  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    //const { name, checked } = event.target;
+    //if (name === 'excludeNumbers') {
+    //  setExcludeNumbers(checked); // Toggle excludeNumbers
+    //} else if (name === 'excludeSpecialChars') {
+    //  setExcludeSpecialChars(checked); // Toggle excludeSpecialChars
+    //}
+//  };
+
+//  // Handle form submission
+//  const handleSubmit = (): void => {
+//    // Basic validation
+//    if (sliderValue < 10) {
+//      setErrorMessage('Password length must be at least 10 characters');
+//      return;
+//    }
+
+//    // Prevent conflicting selections
+//    if (passwordType === 'all' && (excludeNumbers || excludeSpecialChars)) {
+//      setErrorMessage('Cannot select "Use all" if excluding numbers or special characters');
+//      return;
+//    }
+
+//    setErrorMessage(''); // Clear error message if form is valid
+
+//    // Display the selected options in an alert (can be replaced with actual form submission)
+//    alert(`Character Length: ${sliderValue}, Password Type: ${passwordType}, Exclude Numbers: ${excludeNumbers}, Exclude Special Chars: ${excludeSpecialChars}`);
+//  };
+
+//  return (
+//    <Box sx={{ width: '100%' }}>
+//      <FormControl sx={{ width: '100%', gap: { xs: 1.5, md: 2 } }}>
+//        {/* Character Length Slider */}
+//        <Box>
+//          <FormLabel id="slider">Character length</FormLabel>
+//          <Slider
+//            value={sliderValue}
+//            onChange={handleSliderChange}
+//            valueLabelDisplay="auto"
+//            min={10}
+//            max={40}
+//          />
+//        </Box>
+
+//        {/* Password Type Radio Buttons */}
+//        <Box>
+//          <FormLabel id="radio-group">Password type</FormLabel>
+//          <RadioGroup
+//            aria-labelledby="radio-buttons-group-label"
+//            value={passwordType}
+//            onChange={handlePasswordTypeChange}
+//            name="radio-buttons-group"
+//          >
+//            <FormControlLabel
+//              value="capital"
+//              control={<Radio />}
+//              label="Capital letters"
+//            />
+//            <FormControlLabel
+//              value="small"
+//              control={<Radio />}
+//              label="Small letters"
+//            />
+//            <FormControlLabel
+//              value="all"
+//              control={<Radio />}
+//              label="Use all"
+//            />
+//          </RadioGroup>
+//        </Box>
+
+//        {/* Password Complexity Checkboxes */}
+//        <Box>
+//          <FormLabel id="checkbox-group">Password complication</FormLabel>
+//          <FormGroup>
+//            <FormControlLabel
+//              control={<Checkbox checked={excludeNumbers} onChange={handleCheckboxChange} name="excludeNumbers" />}
+//              label="Exclude numbers"
+//            />
+//            <FormControlLabel
+//              control={<Checkbox checked={excludeSpecialChars} onChange={handleCheckboxChange} name="excludeSpecialChars" />}
+//              label="Exclude special chars"
+//            />
+//          </FormGroup>
+//        </Box>
+
+//        {/* Display error message if needed */}
+//        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+
+//        {/* Submit Button */}
+//        <Button onClick={handleSubmit}>Submit</Button>
+//      </FormControl>
+//    </Box>
+//  );
+//};
+
+//export default PasswordSettingsForm;
