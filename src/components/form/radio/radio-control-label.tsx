@@ -7,6 +7,6 @@ interface PropsType {
   label: string;
 }
 const RadioControlLabelComponent: React.FC<PropsType> = ({ value, label }) => (
-  <FormControlLabel value={value} control={<Radio />} label={label} />
+  <FormControlLabel value={value} control={<Radio />} label={label}/>
 );
-export default RadioControlLabelComponent;
+export default React.memo(RadioControlLabelComponent);

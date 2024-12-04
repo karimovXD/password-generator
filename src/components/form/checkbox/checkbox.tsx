@@ -15,31 +15,40 @@ const CheckboxComponent: React.FC<PropsType> = ({
   excludeSpecialChars,
   handleChangeCheckbox,
 }) => {
-  const checkboxOptions = [
-    {
-      exclude: excludeNumbers,
-      label: "Exclude numbers",
-      name: "excludeNumbers",
-      handleChangeCheckbox: handleChangeCheckbox,
+  const checkboxOptions = React.useMemo(
+    () => [
+      {
+        exclude: excludeNumbers,
+        label: "Exclude numbers",
+        name: "excludeNumbers",
+      },
+      {
+        exclude: excludeSpecialChars,
+        label: "Exclude special chars",
+        name: "excludeSpecialChars",
+      },
+    ],
+    [handleChangeCheckbox]
+  );
+
+  const handleCheckboxChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      handleChangeCheckbox(event);
     },
-    {
-      exclude: excludeSpecialChars,
-      label: "Exclude special chars",
-      name: "excludeSpecialChars",
-      handleChangeCheckbox: handleChangeCheckbox,
-    },
-  ];
+    [handleChangeCheckbox] // стабилизируем обработчик
+  );
+
   return (
     <Box>
       <FormLabel id="checkbox-group">Password complication</FormLabel>
-      <FormGroup onChange={handleChangeCheckbox}>
-        {checkboxOptions?.map((item, i: number) => (
+      <FormGroup>
+        {checkboxOptions?.map((item) => (
           <CheckboxControlLabel
-            key={i}
+            key={item.name}
             exclude={item.exclude}
             label={item.label}
             name={item.name}
-            handleChangeCheckbox={item.handleChangeCheckbox}
+            handleChangeCheckbox={handleCheckboxChange}
           />
         ))}
       </FormGroup>

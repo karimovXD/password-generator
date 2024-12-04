@@ -17,10 +17,15 @@ const CheckboxControlLabel: React.FC<PropsType> = ({
 }) => (
   <FormControlLabel
     control={
-      <Checkbox checked={exclude} onChange={handleChangeCheckbox} name={name} />
+      <Checkbox
+        checked={exclude}
+        onChange={handleChangeCheckbox}
+        name={name}
+        inputProps={{ "aria-label": "label" }}
+      />
     }
     label={label}
   />
 );
 
-export default CheckboxControlLabel;
+export default React.memo(CheckboxControlLabel);

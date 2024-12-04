@@ -9,33 +9,36 @@ interface PropsType {
 }
 
 const RadioComponent: React.FC<PropsType> = ({ handleChangeRadio }) => {
-  const radioOptions = [
-    {
-      value: "capital",
-      label: "Capital letter",
-    },
-    {
-      value: "small",
-      label: "Small letter",
-    },
-    {
-      value: "All",
-      label: "Use all",
-    },
-  ];
+  const radioOptions = React.useMemo(
+    () => [
+      {
+        value: "capital",
+        label: "Capital letter",
+      },
+      {
+        value: "small",
+        label: "Small letter",
+      },
+      {
+        value: "All",
+        label: "Use all",
+      },
+    ],
+    []
+  );
 
   return (
     <Box>
       <FormLabel id="radio-group">Password type</FormLabel>
       <RadioGroup
-        aria-labelledby="demo-radio-buttons-group-label"
+        aria-labelledby="radio-group"
         defaultValue="small"
         name="radio-buttons-group"
         onChange={handleChangeRadio}
       >
-        {radioOptions?.map((item, i: number) => (
+        {radioOptions?.map((item) => (
           <RadioControlLabelComponent
-            key={i}
+            key={item.value}
             value={item.value}
             label={item.label}
           />

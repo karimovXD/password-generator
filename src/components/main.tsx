@@ -9,6 +9,7 @@ import PasswordForm from "./form/password-form";
 import { radioType } from "../type/radio-type";
 //service
 import { PasswordService } from "../service/password";
+import { toast } from "react-hot-toast";
 
 const Main: React.FC = () => {
   const [result, setResult] = React.useState<string>("");
@@ -18,33 +19,33 @@ const Main: React.FC = () => {
   const [excludeSpecialChars, setExcludeSpecialChars] =
     React.useState<boolean>(false);
 
-  const handleChangeSlider = (
-    //@ts-ignore
-    event: Event,
-    newValue: number | number[]
-  ): void => {
-    setSliderValue(newValue as number);
-  };
+  const handleChangeSlider = React.useCallback(
+    (event: Event, newValue: number | number[]): void => {
+      setSliderValue(newValue as number);
+    },
+    []
+  );
 
-  const handleChangeRadio = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    setRadioValue(event.target.value as radioType);
-  };
+  const handleChangeRadio = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>): void => {
+      setRadioValue(event.target.value as radioType);
+    },
+    []
+  );
 
-  const handleChangeCheckbox = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const { name, checked } = event.target;
-    if (name === "excludeNumbers") {
-      setExcludeNumbers(checked); // Toggle excludeNumbers
-    } else if (name === "excludeSpecialChars") {
-      setExcludeSpecialChars(checked); // Toggle excludeSpecialChars
-    }
-  };
+  const handleChangeCheckbox = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>): void => {
+      const { name, checked } = event.target;
+      if (name === "excludeNumbers") {
+        setExcludeNumbers(checked); // Toggle excludeNumbers
+      } else if (name === "excludeSpecialChars") {
+        setExcludeSpecialChars(checked); // Toggle excludeSpecialChars
+      }
+    },
+    [excludeNumbers, excludeSpecialChars]
+  );
 
   const handleGenerate = async () => {
-    console.log(sliderValue, radioValue, excludeNumbers, excludeSpecialChars);
     try {
       const { random_password } = await PasswordService.generatePassword(
         sliderValue,
@@ -52,7 +53,10 @@ const Main: React.FC = () => {
         excludeSpecialChars
       );
       setResult(random_password);
-    } catch (error) {}
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Error";
+      toast.error(errorMessage);
+    }
   };
 
   return (
