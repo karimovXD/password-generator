@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 //mui
 import { Stack, Box, Button } from "@mui/material";
 //components
@@ -53,12 +53,17 @@ const Main: React.FC = () => {
         excludeNumbers,
         excludeSpecialChars
       );
+      localStorage.setItem("password", random_password);
       setResult(random_password);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Error";
       toast.error(errorMessage);
     }
   };
+
+  useEffect(() => {
+    setResult(localStorage.getItem("password")!);
+  }, []);
 
   return (
     <Stack
@@ -93,7 +98,11 @@ const Main: React.FC = () => {
           }}
         >
           <BoxComponent>
-            <Result result={result} textType={radioValue} />
+            <Result
+              result={result}
+              textType={radioValue}
+              setResult={setResult}
+            />
           </BoxComponent>
           <BoxComponent>
             <PasswordForm
@@ -109,6 +118,7 @@ const Main: React.FC = () => {
               variant="outlined"
               sx={{ width: "100%" }}
               onClick={handleGenerate}
+              //disabled={}
             >
               Click
             </Button>
