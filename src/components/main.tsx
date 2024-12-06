@@ -93,11 +93,7 @@ const Main: React.FC = () => {
           }}
         >
           <BoxComponent>
-            <Result
-              result={result}
-              textType={radioValue}
-              setResult={setResult}
-            />
+            <Result result={result} textType={radioValue} />
           </BoxComponent>
           <BoxComponent>
             <PasswordForm

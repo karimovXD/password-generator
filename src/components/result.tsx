@@ -10,10 +10,9 @@ import { radioType } from "../type/radio-type";
 interface PropsType {
   result: string;
   textType: radioType;
-  setResult: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Result: React.FC<PropsType> = ({ result, textType, setResult }) => {
+const Result: React.FC<PropsType> = ({ result, textType }) => {
   const handleCopy = React.useCallback(async () => {
     try {
       await navigator.clipboard.writeText(result);
@@ -28,9 +27,9 @@ const Result: React.FC<PropsType> = ({ result, textType, setResult }) => {
   const handleTextType = (text: radioType): string => {
     switch (text) {
       case "small":
-        return setResult((result) => result.toLowerCase()), "lowercase";
+        return "lowercase";
       case "capital":
-        return setResult((result) => result.toUpperCase()), "uppercase";
+        return "uppercase";
       case "all":
         return "none";
       default:
