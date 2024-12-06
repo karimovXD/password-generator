@@ -21,6 +21,7 @@ const Main: React.FC = () => {
 
   const handleChangeSlider = React.useCallback(
     (event: Event, newValue: number | number[]): void => {
+      console.log(event.target);
       setSliderValue(newValue as number);
     },
     []
